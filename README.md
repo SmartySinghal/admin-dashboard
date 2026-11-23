@@ -2,7 +2,7 @@
 
 A responsive e-commerce admin dashboard with mock data and no chart library dependencies.
 
-**Live demo:** _coming soon_
+**Live demo:** https://nimbus-admin-dashboard.onrender.com
 
 ## Features
 - Collapsible sidebar layout with routing (Dashboard, Orders, Customers, Settings)
