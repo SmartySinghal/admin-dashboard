@@ -1,5 +1,7 @@
 # Nimbus Admin – Angular Admin Dashboard (Angular 22 + Tailwind CSS)
 
+![Screenshot](docs/screenshot.jpg)
+
 A responsive e-commerce admin dashboard with mock data and no chart library dependencies.
 
 **Live demo:** https://nimbus-admin-dashboard.onrender.com
