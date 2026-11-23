@@ -1,0 +1,54 @@
+<div class="space-y-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900">Orders</h1>
+      <p class="text-sm text-slate-500">{{ filtered().length }} orders found</p>
+    </div>
+    <div class="flex flex-wrap gap-3">
+      <input type="search" placeholder="Search order, customer or product…" [ngModel]="search()" (ngModelChange)="search.set($event); onFilter()"
+             class="w-64 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/15" />
+      <select [ngModel]="status()" (ngModelChange)="status.set($event); onFilter()"
+              class="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm outline-none focus:border-indigo-500">
+        @for (s of statuses; track s) { <option [value]="s">{{ s === 'All' ? 'All statuses' : s }}</option> }
+      </select>
+    </div>
+  </div>
+
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+          <tr>
+            <th class="px-5 py-3">Order</th>
+            <th class="cursor-pointer px-5 py-3 select-none hover:text-slate-800" (click)="setSort('customer')">Customer {{ arrow('customer') }}</th>
+            <th class="px-5 py-3">Product</th>
+            <th class="cursor-pointer px-5 py-3 select-none hover:text-slate-800" (click)="setSort('date')">Date {{ arrow('date') }}</th>
+            <th class="cursor-pointer px-5 py-3 select-none hover:text-slate-800" (click)="setSort('amount')">Amount {{ arrow('amount') }}</th>
+            <th class="px-5 py-3">Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          @for (o of rows(); track o.id) {
+            <tr class="hover:bg-slate-50">
+              <td class="px-5 py-3 font-medium text-slate-900">{{ o.id }}</td>
+              <td class="px-5 py-3"><p class="font-medium text-slate-800">{{ o.customer }}</p><p class="text-xs text-slate-500">{{ o.email }}</p></td>
+              <td class="px-5 py-3"><p>{{ o.product }}</p><p class="text-xs text-slate-500">{{ o.category }}</p></td>
+              <td class="px-5 py-3 text-slate-500">{{ o.date | date: 'mediumDate' }}</td>
+              <td class="px-5 py-3 font-semibold">{{ o.amount | currency }}</td>
+              <td class="px-5 py-3"><app-status-badge [status]="o.status" /></td>
+            </tr>
+          } @empty {
+            <tr><td colspan="6" class="px-5 py-12 text-center text-slate-500">No orders match your filters.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="flex items-center justify-between border-t border-slate-100 px-5 py-3 text-sm">
+      <p class="text-slate-500">Page {{ page() }} of {{ totalPages() }}</p>
+      <div class="flex gap-2">
+        <button type="button" (click)="page.set(page() - 1)" [disabled]="page() === 1" class="rounded-lg border border-slate-300 px-3 py-1.5 font-medium disabled:opacity-40">Previous</button>
+        <button type="button" (click)="page.set(page() + 1)" [disabled]="page() === totalPages()" class="rounded-lg border border-slate-300 px-3 py-1.5 font-medium disabled:opacity-40">Next</button>
+      </div>
+    </div>
+  </div>
+</div>

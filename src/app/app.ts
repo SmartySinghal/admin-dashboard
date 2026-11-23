@@ -1,12 +1,17 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.css',
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('admin-dashboard');
+  sidebarOpen = signal(false);
+  readonly nav = [
+    { path: '/', label: 'Dashboard', icon: '🏠', exact: true },
+    { path: '/orders', label: 'Orders', icon: '🧾', exact: false },
+    { path: '/customers', label: 'Customers', icon: '👥', exact: false },
+    { path: '/settings', label: 'Settings', icon: '⚙️', exact: false },
+  ];
 }
